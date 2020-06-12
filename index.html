@@ -1,0 +1,133 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<title>sarozzx(Saroj Poudel)</title>
+</head>
+<body>
+<div id="loading">
+    loading....
+</div>
+<div class="main" id="main" hidden>
+
+	<section class="fh5co-about-me">
+		<div class="about-me-inner site-container">
+			<article class="portfolio-wrapper">
+				<div class="portfolio__img">
+					<img  class="about-me__profile" alt="about me profile picture" id="imgp">
+				</div>
+				<div class="portfolio__bottom">
+					<div class="portfolio__name">
+
+						<h2 class="universal-h2" id="name"></h2>
+					</div>
+					<p id="username"></p>
+
+					<p>Twitter:</p>
+					<a href="https://twitter.com/SarozPoudel2?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @SarozPoudel2</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</div>
+			</article>
+			<div class="about-me__text">
+				<div class="about-me-slider">
+					<div class="about-me-single-slide">
+						<h2 class="universal-h2 universal-h2-bckg">Github Details</h2>
+						<p  class="b1" id="bio"></p>
+						<p class="b1" id="followers_count"></p>
+						<p class="b1">
+							Check me on <a class="b1" id="gitlink">Github</a>
+						</p>
+
+						<br><br>
+					<p class="b1">Repo Details ==></p>
+					</div>
+					<div class="about-me-single-slide">
+						<h2 class="universal-h2 universal-h2-bckg">Repo Details</h2>
+						<table class="table" id="tab" style="table-layout: fixed">
+  <thead class="thead-light">
+    <tr>
+
+      <th >Name</th>
+      <th >url</th>
+<!--      <th >Language</th>-->
+    </tr>
+  </thead>
+  <tbody class="b2" >
+
+
+  </tbody>
+</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="about-me-bckg"></div>
+	</section>
+</div>
+<script>
+    fetch("https://api.github.com/users/sarozzx")
+        .then(response => response.json())
+        .then(function (data) {
+            console.log(data)
+            let followersCount =data['followers']
+            let followersInfo =`Followed by ${followersCount} amazing peoples in Github`
+
+            document.getElementById("imgp").src=data['avatar_url']
+            document.getElementById("name").textContent=data["name"]
+            document.getElementById("bio").textContent="Bio :  "+data["bio"]
+            document.getElementById("gitlink").href=data["html_url"]
+			document.getElementById("username").textContent="Username : "+data['login' ]
+
+
+
+            document.getElementById("followers_count").textContent=followersInfo
+                                    document.getElementById("main").hidden = false
+                        document.getElementById("loading").hidden = true
+
+        })
+
+
+
+			fetch("https://api.github.com/users/sarozzx/repos")
+					.then(response => response.json())
+
+					.then(function (dat) {
+
+								console.log(dat)
+								var tabref = document.getElementById("tab").getElementsByTagName("tbody")[0];
+
+
+								for (var i = 0; i < dat.length; i++) {
+									var newRow = tabref.insertRow();
+									let str = '';
+
+									str += "<tr>";
+
+									str += "<td>" + dat[i].name + "</td>";
+									str += "<td> " + "<a href='" + dat[i].html_url + "'a>" + dat[i].html_url + "</a>" + "</td>";
+									// str += "<td>" + dat[i].language + "</td>";
+									str += "</tr>";
+
+									newRow.innerHTML = str;
+
+								}
+
+
+							}
+					)
+
+
+
+
+</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/slick.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
